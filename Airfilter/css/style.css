@@ -1,0 +1,147 @@
+@charset "utf-8";
+/* font-family: 'Quicksand', sans-serif; */
+/* bleu clair -> #3498DB */
+/* bleu fonçé -> #2C3E50 */
+body, html{
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.separator{
+    height: 7px;
+    width: 15%;
+    box-shadow: none;
+    border: none;
+    background-color: #3498DB;
+}
+
+/* header */
+a, a:hover{
+    text-decoration: none;
+}
+
+.container-fluid{
+    padding: 0;
+}
+
+.header{
+    background-color: #3498DB;
+    height: 400%;
+    line-height: 400%;
+}
+
+.logo{
+    color: #ffffff;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.menu{
+    float: right;
+}
+
+.menu a {
+    color: #ffffff;
+    text-align: right;
+    margin-right: 25px;
+}
+
+.menu a:hover{
+    color: #2C3E50;
+}
+
+/* Bannière */
+.banner{
+    height: 100%;
+    max-width: 100%;
+}
+
+.ban img{
+    height: 100%;
+    max-width: 100%;
+}
+
+.ban{
+    height: 100%;
+    max-width: 100%;
+    position: relative;
+}
+
+.inner-banner{
+    position: absolute;
+    top: 70%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.inner-banner h1{
+    color: #ffffff;
+    text-shadow: 1px 1px 20px #000000;
+    margin-bottom: 3%;
+}
+
+.inner-banner .btn-custom{
+    background-color: #3498DB;
+    color: #ffffff;
+    width: 15%;
+    padding-bottom: 0.6%;
+    padding-top: 0.6%;
+}
+
+.inner-banner .btn-custom:hover{
+    background-color: #2C3E50;
+    color: #ffffff;
+}
+
+/* A propos */
+.about article h2 {
+    text-align: center;
+}
+
+.about{
+    text-align: center;
+    padding-top: 10%;
+}
+
+.about article{
+    margin-top: 10%;
+}
+/* Datatable */
+dt, dd{
+    display: inline-block;
+}
+.row table{
+    margin-top: 10%;
+}
+.row table .illustration{
+    height: 15%;
+    max-width: 15%;
+}
+#fiche{
+    height: 30%;
+    max-width: 30%;
+}
+.datatable-section{
+    padding-top: 10%;
+}
+ .datatable{
+    padding-bottom: 10%;
+}
+
+/*Contact / footer*/
+.bg-custom{
+    background-color: #3498DB;
+}
+
+footer{
+    margin-top: 10%;
+}
+
+.contact{
+    padding-top: 10%;
+}
