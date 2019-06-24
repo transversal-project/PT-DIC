@@ -1,4 +1,16 @@
 {
+    "name": "DerXter/Airfilter-Slim-API",
+    "authors": [
+        {
+            "name": "Derguene Mbaye",
+            "email": "mbayederguene@hotmail.fr"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
     "require": {
         "slim/slim": "^3.12"
     }
