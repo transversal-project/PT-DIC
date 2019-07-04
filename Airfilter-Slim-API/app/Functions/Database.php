@@ -139,24 +139,24 @@
             $params = array(); #Tableau contenant les paramètres de la requête
 
             if($location==null && $date==null){
-                $requete = "SELECT * FROM collecte.capteur";
+                $requete = "SELECT * FROM capteur";
             }
             else if($location!=null && $date==null){
-                $requete = "SELECT * FROM collecte.capteur WHERE location LIKE ?";
+                $requete = "SELECT * FROM capteur WHERE location LIKE ?";
                 $params = array($location);
             }
             else if($location==null && $date!=null){
                 //Formalisation de la date
                 $date = date("Y-m-d", strtotime($date));
 
-                $requete = "SELECT * FROM collecte.capteur WHERE date = ?";
+                $requete = "SELECT * FROM capteur WHERE date = ?";
                 $params = array($date);
             }
             else{ #Aucun des paramètres n'est nul
                 #Formalisation de la date
                 $date = date("Y-m-d", strtotime($date));
 
-                $requete = "SELECT * FROM collecte.capteur WHERE location LIKE ? AND date = ?";
+                $requete = "SELECT * FROM capteur WHERE location LIKE ? AND date = ?";
                 $params = array($location, $date);
             } 
             
