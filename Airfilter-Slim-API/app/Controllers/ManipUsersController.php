@@ -26,7 +26,7 @@
             $password = $request->getParam('password');
             $email = $request->getParam('email');
     
-            # Vérification des attributs et retour du résultat
+            # Retour du résultat
             $response->getBody()->write($bdd->ajoutUtilisateur($login, $email, $password));
     
             return $response;

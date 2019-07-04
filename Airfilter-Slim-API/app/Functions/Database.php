@@ -134,5 +134,44 @@
     
         } //End checkStateValidation($id)
 
+        public function afficheMesures($location, $date){
+            $pdo = $this->bdd;
+            $params = array(); #Tableau contenant les paramètres de la requête
+
+            if($location==null && $date==null){
+                $requete = "SELECT * FROM collecte.capteur";
+            }
+            else if($location!=null && $date==null){
+                $requete = "SELECT * FROM collecte.capteur WHERE location LIKE ?";
+                $params = array($location);
+            }
+            else if($location==null && $date!=null){
+                //Formalisation de la date
+                $date = date("Y-m-d", strtotime($date));
+
+                $requete = "SELECT * FROM collecte.capteur WHERE date = ?";
+                $params = array($date);
+            }
+            else{ #Aucun des paramètres n'est nul
+                #Formalisation de la date
+                $date = date("Y-m-d", strtotime($date));
+
+                $requete = "SELECT * FROM collecte.capteur WHERE location LIKE ? AND date = ?";
+                $params = array($location, $date);
+            } 
+            
+            $reponse = $pdo->prepare($requete);
+            $reponse->execute($params);
+
+            if($data = $reponse->fetchAll()){
+                return json_encode($data);
+            }
+            else{
+                echo json_encode(['type'=>'Echec', 'msg'=>"Aucune données de mesure présente dans la base de données."]); 
+                return false;
+            }
+
+        } //End afficheMesures
+
 
     } //End Databse
