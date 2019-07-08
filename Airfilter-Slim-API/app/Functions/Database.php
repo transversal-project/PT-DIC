@@ -174,7 +174,7 @@
 
                     $requete = "SELECT valeur, date, nomCapteur, typeDonnee, position FROM mesure m, capteur c WHERE m.idCapteur = c.idCapteur AND date >= ? AND date <= ? ORDER BY date";
                     $params = array($dateDebut, $dateFin);
-                }
+                } //End else 
             } //End else if
             else{ # Ni position ni dateDebut n'est nul
                 if($dateFin==null){

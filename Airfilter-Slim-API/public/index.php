@@ -1,4 +1,5 @@
 <?php
+    header('Access-Control-Allow-Origin: *'); //Accepte n'importe quelle requête venant de n'importe où
     # Configuartion
     use Psr\Http\Message\ServerRequestInterface as Request;
     use Psr\Http\Message\ResponseInterface as Response;
