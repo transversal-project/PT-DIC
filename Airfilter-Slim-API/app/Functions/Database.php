@@ -297,6 +297,12 @@
 
         public function ajoutCapteur($nomCapteur, $typeDonnee, $position, $latitude, $longitude){
             $pdo = $this->bdd;
+            # Vérification de la validité du type de données entré
+            if(!self::checkTypeDonnee($typeDonnee)){
+                echo json_encode(['type'=>'Echec', 'msg'=>'Type non autorisé.', 'Types autorisés' => self::getTypeDonnee()]);
+                return -1;
+            }
+            # Ajout de la position du capteur dans la table position
             if(self::ajoutPosition($latitude, $longitude, $position)==-1){
                 return -1;
             }
@@ -352,5 +358,32 @@
                 return 0;
 
         } //End checkPosition
+
+        private function checkTypeDonnee($typeDonnee){
+            $pdo = $this->bdd;
+            $requete = "SELECT idCapteur FROM capteur WHERE typeDonnee=?";
+            $reponse = $pdo->prepare($requete);
+            $reponse->execute(array($typeDonnee));
+
+            if($reponse->fetch())
+                return true;
+            else
+                return false;
+
+        } //End checkTypeDonnee
+
+        private function getTypeDonnee(){
+            $pdo = $this->bdd;
+            $requete = "SELECT typeDonnee FROM capteur ORDER BY typeDonnee";
+            $reponse = $pdo->query($requete);
+
+            if($types = $reponse->fetchAll())
+                return $types;
+            else{
+                echo json_encode(['type'=>'Echec', 'msg'=>"Aucun type de donnée trouvé dans la base de données."]); 
+                return -1;
+            }
+
+        } //End getTypeDonnee
 
     } //End Databse

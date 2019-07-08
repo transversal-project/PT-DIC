@@ -33,6 +33,7 @@
     /************ Requêtes get ************/
     $app->get('/afficheMesures', SensorController::class.':showData');
     $app->get('/mesuresCapteur', SensorController::class.':showSensorData');
+    $app->get('/distanceCapteur', SensorController::class.':getDistance');
     
     #Lancement de l'application
     $app->run();
