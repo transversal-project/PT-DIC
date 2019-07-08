@@ -2,7 +2,6 @@
     # Configuartion
     use Psr\Http\Message\ServerRequestInterface as Request;
     use Psr\Http\Message\ResponseInterface as Response;
-    use App\Controllers\ConnexionController;
     use App\Controllers\ManipUsersController;
     use App\Controllers\SensorController;
 
@@ -21,16 +20,19 @@
 
     # Gestion des routes
     /************ Requêtes post ************/
-    ## Connexion d'un utilisateur
-    $app->post('/connexion', ConnexionController::class.':connect');
-
-    ## Ajout d'un utilisateur
-    $app->post('/ajoutUtilisateur', ManipUsersController::class.':addUser');
+    ## Connexion d'un client
+    $app->post('/connexion', ManipUsersController::class.':connect');
+    ## Ajout d'un client
+    $app->post('/ajoutClient', ManipUsersController::class.':addCustomer');
+    ## Ajout d'une mesure de capteur
+    $app->post('/ajoutMesure', SensorController::class.':addSensorData');
+    ## Ajout d'un capteur
+    $app->post('/ajoutCapteur', SensorController::class.':addSensor');
 
 
     /************ Requêtes get ************/
     $app->get('/afficheMesures', SensorController::class.':showData');
-
+    $app->get('/mesuresCapteur', SensorController::class.':showSensorData');
     
     #Lancement de l'application
     $app->run();
