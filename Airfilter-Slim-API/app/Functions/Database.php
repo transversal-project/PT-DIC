@@ -295,6 +295,54 @@
 
         } //End ajoutmesure
 
+        public function afficheCapteurs($nomCapteur, $typeDonnee, $position){
+            $pdo = $this->bdd;
+            $params = array();
+            if($nomCapteur != null){
+                if($typeDonnee!=null || $position!=null){
+                    echo json_encode(['type'=>'Echec', 'msg'=>"Un seul paramètre peut être spécifié à la fois."]); 
+                    return false;
+                }
+                $requete = "SELECT nomCapteur, typeDonnee, latitude, longitude, designation as position FROM capteur c, position p WHERE c.idPosition=p.idPosition AND nomCapteur=?";
+                $params = array($nomCapteur);
+            } //End if (nomCapteur)
+            else if($typeDonnee!=null){
+                if($nomCapteur!=null || $position!=null){
+                    echo json_encode(['type'=>'Echec', 'msg'=>"Un seul paramètre peut être spécifié à la fois."]); 
+                    return false;
+                }
+                $requete = "SELECT nomCapteur, typeDonnee, latitude, longitude, designation as position FROM capteur c, position p WHERE c.idPosition=p.idPosition AND typeDonnee=?";
+                $params = array($typeDonnee);
+            } //End else if (typeDonne)
+            else if($position!=null){
+                if($nomCapteur!=null || $typeDonnee!=null){
+                    echo json_encode(['type'=>'Echec', 'msg'=>"Un seul paramètre peut être spécifié à la fois."]); 
+                    return false;
+                }
+                $requete = "SELECT nomCapteur, typeDonnee, latitude, longitude, designation as position FROM capteur c, position p WHERE c.idPosition=p.idPosition AND designation LIKE ?";
+                $params = array("%".$position."%");
+            } //End else if (typeDonne)
+            else if($nomCapteur==null && $typeDonnee==null && $position==null){
+                $requete = "SELECT nomCapteur, typeDonnee, latitude, longitude, designation as position FROM capteur c, position p WHERE c.idPosition=p.idPosition";
+            }
+            else{
+                echo json_encode(['type'=>'Echec', 'msg'=>"Un seul paramètre peut être spécifié à la fois."]); 
+                return false;
+            }
+
+            $reponse = $pdo->prepare($requete);
+            $reponse->execute($params);
+
+            if($data = $reponse->fetchAll()){
+                return json_encode($data);
+            }
+            else{
+                echo json_encode(['type'=>'Echec', 'msg'=>"Aucun capteur ne correspond à votre reherche."]); 
+                return false;
+            }
+
+        } //End afficheCapteurs
+
         public function ajoutCapteur($nomCapteur, $typeDonnee, $position, $latitude, $longitude){
             $pdo = $this->bdd;
             # Vérification de la validité du type de données entré
@@ -303,15 +351,17 @@
                 return -1;
             }
             # Ajout de la position du capteur dans la table position
-            if(self::ajoutPosition($latitude, $longitude, $position)==-1){
+            $idPosition = self::ajoutPosition($latitude, $longitude, $position);
+            if($idPosition ==-1){
                 return -1;
             }
-            $requete = "INSERT INTO capteur (nomCapteur, typeDonnee, position) VALUES (:nomCapteur, :typeDonnee, :position)";
+        
+            $requete = "INSERT INTO capteur (nomCapteur, typeDonnee, idPosition) VALUES (:nomCapteur, :typeDonnee, :idPosition)";
             $reponse = $pdo->prepare($requete);
             $reponse->execute(array(
                 'nomCapteur' => $nomCapteur,
                 'typeDonnee' => $typeDonnee,
-                'position' => $position          
+                'idPosition' => $idPosition          
             ));
 
             if($reponse->rowCount() > 0){
@@ -331,13 +381,13 @@
             if(self::checkPosition($latitude, $longitude)==-1)
                 return 0;
 
-            $requete = "INSERT INTO position VALUES (?, ?, ?)";
+            $requete = "INSERT INTO position (latitude, longitude, designation) VALUES (?, ?, ?)";
             $reponse = $pdo->prepare($requete);
             $reponse->execute(array($latitude, $longitude, $position));
 
             if($reponse->rowCount() > 0){
                 echo json_encode(['type'=>'Success', 'msg'=>"Position ajoutée."]); 
-                return 0;
+                return $pdo->lastInsertId();
             }
             else{
                 echo json_encode(['type'=>'Echec', 'msg'=>"Une erreur est survenue lors de l'ajout de la position du capteur."]); 

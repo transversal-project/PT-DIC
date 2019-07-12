@@ -38,6 +38,8 @@ Les requêtes devront être structurées de la sorte :
 > __Note:__ Tous les paramètres sont facultatifs sauf __nomCapteur__. Il est possible de spécifier un paramètre à la fois sauf __dateFin__.   
 * __distanceCapteur (latitude1, longitude1, latitude2, longitude2, unite)__ : Calcul de distance entre deux capteurs à partir de leurs coordonnées géographiques (latitudes et longitudes).  
 > __Note:__ L'__unité__ est facultative. Le __km__ est considéré par défaut. Les unités prises en compte sont: __K__ (Kilomètre), __M__ (Miles) et __N__ (Nautical miles).  
+* __afficheCapteurs (nomCapteur, typeDonnee, position)__ : Fonction d'affichage des capteurs.  
+> __Note:__ Les paramètres sont facultatifs. Un seul paramètre peut être spécifié à la fois. Si aucun paramètre n'est spécifié, tous les capteurs seront affichés.  
 
 
 ### Fonctions d'upload de données (post):  

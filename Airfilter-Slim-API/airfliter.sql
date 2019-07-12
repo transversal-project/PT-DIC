@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Client :  localhost:3306
--- Généré le :  Ven 12 Juillet 2019 à 15:58
+-- Généré le :  Ven 12 Juillet 2019 à 16:57
 -- Version du serveur :  5.7.26-0ubuntu0.18.04.1
 -- Version de PHP :  7.2.19-0ubuntu0.18.04.1
 
@@ -75,7 +75,8 @@ CREATE TABLE `capteur` (
 INSERT INTO `capteur` (`idCapteur`, `nomCapteur`, `typeDonnee`, `idPosition`) VALUES
 (1, 'capt65', 'pm10', 1),
 (2, 'capt66', 'pm25', 2),
-(3, 'capt68', 'pm1', 3);
+(3, 'capt68', 'pm1', 3),
+(5, 'capt90', 'pm10', 8);
 
 -- --------------------------------------------------------
 
@@ -122,7 +123,9 @@ INSERT INTO `mesure` (`idCapteur`, `valeur`, `date`) VALUES
 (2, 23.7868, '2019-07-16'),
 (2, 67.9879, '2019-07-08'),
 (1, 767.98, '2019-07-07'),
-(3, 66.898, '2019-07-09');
+(3, 66.898, '2019-07-09'),
+(1, 767.98, '2019-07-12'),
+(5, 75.9799, '2019-07-12');
 
 -- --------------------------------------------------------
 
@@ -144,7 +147,8 @@ CREATE TABLE `position` (
 INSERT INTO `position` (`idPosition`, `latitude`, `longitude`, `designation`) VALUES
 (1, 14.7378, -17.453300000000013, 'Arafat'),
 (2, 14.7594, -17.438499999999976, 'Parcelles Assainies, Dakar, Sénégal'),
-(3, 14.7401, -17.45010000000002, 'Cité Millionnaire');
+(3, 14.7401, -17.45010000000002, 'Cité Millionnaire'),
+(8, 12.7687678, -65.98798789, 'Diamalaye');
 
 --
 -- Index pour les tables exportées
@@ -207,7 +211,7 @@ ALTER TABLE `alerte`
 -- AUTO_INCREMENT pour la table `capteur`
 --
 ALTER TABLE `capteur`
-  MODIFY `idCapteur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idCapteur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT pour la table `client`
 --
@@ -217,7 +221,7 @@ ALTER TABLE `client`
 -- AUTO_INCREMENT pour la table `position`
 --
 ALTER TABLE `position`
-  MODIFY `idPosition` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idPosition` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- Contraintes pour les tables exportées
 --

@@ -26,7 +26,7 @@
             $response->getBody()->write($bdd->afficheMesures($position, $dateDebut, $dateFin));
         } //End showData
         /**
-         * Fonction d'affichage d'un capteur donné
+         * Fonction d'affichage des données d'un capteur donné
          */
         public function showSensorData(Request $request, Response $response){
             $bdd = $this->container->db;
@@ -35,6 +35,17 @@
             $dateFin = $request->getParam('dateFin');
             
             $response->getBody()->write($bdd->mesuresCapteur($nomCapteur, $dateDebut, $dateFin));
+        } //End showData
+        /**
+         * Fonction d'affichage des capteurs
+         */
+        public function showSensors(Request $request, Response $response){
+            $bdd = $this->container->db;
+            $nomCapteur = $request->getParam('nomCapteur');
+            $typeDonnee = $request->getParam('typeDonnee');
+            $position = $request->getParam('position');
+            
+            $response->getBody()->write($bdd->afficheCapteurs($nomCapteur, $typeDonnee, $position));
         } //End showData
 
         /**
