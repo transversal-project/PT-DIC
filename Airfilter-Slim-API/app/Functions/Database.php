@@ -146,11 +146,11 @@
             }
 
             if($position==null && $dateDebut==null){
-                $requete = "SELECT valeur, date, nomCapteur, typeDonnee, position FROM mesure m, capteur c WHERE m.idCapteur = c.idCapteur ORDER BY date";
+                $requete = "SELECT nomCapteur, valeur, typeDonnee, latitude, longitude, designation AS position, date FROM mesure m, capteur c, position p WHERE m.idCapteur = c.idCapteur AND p.idPosition=c.idPosition ORDER BY date";
             }
             else if($position!=null && $dateDebut==null){
-                $requete = "SELECT valeur, date, nomCapteur, typeDonnee, position FROM mesure m, capteur c WHERE m.idCapteur = c.idCapteur AND position LIKE ? ORDER BY date";
-                $params = array($position);
+                $requete = "SELECT nomCapteur, valeur, typeDonnee, latitude, longitude, designation AS position, date FROM mesure m, capteur c, position p WHERE m.idCapteur = c.idCapteur AND p.idPosition=c.idPosition AND designation LIKE ? ORDER BY date";
+                $params = array("%".$position."%");
             }
             else if($position==null && $dateDebut!=null){
                 if($dateFin==null){
@@ -158,7 +158,7 @@
                     # Formalisation de la date
                     $date = date("Y-m-d", strtotime($dateDebut));
 
-                    $requete = "SELECT valeur, date, nomCapteur, typeDonnee, position FROM mesure m, capteur c WHERE m.idCapteur = c.idCapteur AND date = ? ORDER BY date";
+                    $requete = "SELECT nomCapteur, valeur, typeDonnee, latitude, longitude, designation AS position, date FROM mesure m, capteur c, position p WHERE m.idCapteur = c.idCapteur AND p.idPosition=c.idPosition AND date = ? ORDER BY date";
                     $params = array($date);
                 }
                 else{
@@ -172,7 +172,7 @@
                         return false;
                     }
 
-                    $requete = "SELECT valeur, date, nomCapteur, typeDonnee, position FROM mesure m, capteur c WHERE m.idCapteur = c.idCapteur AND date >= ? AND date <= ? ORDER BY date";
+                    $requete = "SELECT nomCapteur, valeur, typeDonnee, latitude, longitude, designation AS position, date FROM mesure m, capteur c, position p WHERE m.idCapteur = c.idCapteur AND p.idPosition=c.idPosition AND date >= ? AND date <= ? ORDER BY date";
                     $params = array($dateDebut, $dateFin);
                 } //End else 
             } //End else if
@@ -182,8 +182,8 @@
                     # Formalisation de la date
                     $date = date("Y-m-d", strtotime($dateDebut));
 
-                    $requete = "SELECT valeur, date, nomCapteur, typeDonnee, position FROM mesure m, capteur c WHERE m.idCapteur = c.idCapteur AND position LIKE ? AND date = ? ORDER BY date";
-                    $params = array($position, $date);
+                    $requete = "SELECT nomCapteur, valeur, typeDonnee, latitude, longitude, designation AS position, date FROM mesure m, capteur c, position p WHERE m.idCapteur = c.idCapteur AND p.idPosition=c.idPosition AND designation LIKE ? AND date = ? ORDER BY date";
+                    $params = array("%".$position."%", $date);
                 }
                 else{
                     # Une période est fournie
@@ -196,8 +196,8 @@
                         return false;
                     }
 
-                    $requete = "SELECT valeur, date, nomCapteur, typeDonnee, position FROM mesure m, capteur c WHERE m.idCapteur = c.idCapteur AND position LIKE ? AND date >= ? AND date <= ? ORDER BY date";
-                    $params = array($position, $dateDebut, $dateFin);
+                    $requete = "SELECT nomCapteur, valeur, typeDonnee, latitude, longitude, designation AS position, date FROM mesure m, capteur c, position p WHERE m.idCapteur = c.idCapteur AND p.idPosition=c.idPosition AND designation LIKE ? AND date >= ? AND date <= ? ORDER BY date";
+                    $params = array("%".$position."%", $dateDebut, $dateFin);
                 }
                 
             } //End else de # Ni position ni dateDebut n'est nul
@@ -230,7 +230,7 @@
                 return false;
             }
             else if($nomCapteur!=null && $dateDebut==null){
-                $requete = "SELECT valeur, date, typeDonnee, position FROM mesure m, capteur c WHERE m.idCapteur = c.idCapteur AND nomCapteur LIKE ? ORDER BY date";
+                $requete = "SELECT nomCapteur, valeur, typeDonnee, latitude, longitude, designation AS position, date FROM mesure m, capteur c, position p WHERE m.idCapteur = c.idCapteur AND p.idPosition=c.idPosition AND nomCapteur LIKE ? ORDER BY date";
                 $params = array($nomCapteur);
             }
             else{ # Ni nomCapteur ni dateDebut n'est nul
@@ -239,7 +239,7 @@
                     # Formalisation de la date
                     $date = date("Y-m-d", strtotime($dateDebut));
 
-                    $requete = "SELECT valeur, date, typeDonnee, position FROM mesure m, capteur c WHERE m.idCapteur = c.idCapteur AND nomCapteur LIKE ? AND date = ? ORDER BY date";
+                    $requete = "SELECT nomCapteur, valeur, typeDonnee, latitude, longitude, designation AS position, date FROM mesure m, capteur c, position p WHERE m.idCapteur = c.idCapteur AND p.idPosition=c.idPosition AND nomCapteur LIKE ? AND date = ? ORDER BY date";
                     $params = array($nomCapteur, $date);
                 }
                 else{
@@ -253,7 +253,7 @@
                         return false;
                     }
 
-                    $requete = "SELECT valeur, date, typeDonnee, position FROM mesure m, capteur c WHERE m.idCapteur = c.idCapteur AND nomCapteur LIKE ? AND date >= ? AND date <= ? ORDER BY date";
+                    $requete = "SELECT nomCapteur, valeur, typeDonnee, latitude, longitude, designation AS position, date FROM mesure m, capteur c, position p WHERE m.idCapteur = c.idCapteur AND p.idPosition=c.idPosition AND nomCapteur LIKE ? AND date >= ? AND date <= ? ORDER BY date";
                     $params = array($nomCapteur, $dateDebut, $dateFin);
                 }
                 
