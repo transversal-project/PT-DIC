@@ -2,10 +2,10 @@
 -- version 4.6.6deb5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Jul 08, 2019 at 12:13 AM
--- Server version: 5.7.26-0ubuntu0.18.04.1
--- PHP Version: 7.2.19-0ubuntu0.18.04.1
+-- Client :  localhost:3306
+-- Généré le :  Ven 12 Juillet 2019 à 15:58
+-- Version du serveur :  5.7.26-0ubuntu0.18.04.1
+-- Version de PHP :  7.2.19-0ubuntu0.18.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `airfliter`
+-- Base de données :  `airfliter`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `admins`
+-- Structure de la table `admins`
 --
 
 CREATE TABLE `admins` (
@@ -34,7 +34,7 @@ CREATE TABLE `admins` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `admins`
+-- Contenu de la table `admins`
 --
 
 INSERT INTO `admins` (`id`, `email`, `password`, `validation`) VALUES
@@ -43,7 +43,7 @@ INSERT INTO `admins` (`id`, `email`, `password`, `validation`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `alerte`
+-- Structure de la table `alerte`
 --
 
 CREATE TABLE `alerte` (
@@ -58,29 +58,29 @@ CREATE TABLE `alerte` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `capteur`
+-- Structure de la table `capteur`
 --
 
 CREATE TABLE `capteur` (
   `idCapteur` int(11) NOT NULL,
   `nomCapteur` varchar(255) NOT NULL,
   `typeDonnee` enum('pm1','pm10','pm25') NOT NULL,
-  `position` varchar(255) NOT NULL
+  `idPosition` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `capteur`
+-- Contenu de la table `capteur`
 --
 
-INSERT INTO `capteur` (`idCapteur`, `nomCapteur`, `typeDonnee`, `position`) VALUES
-(1, 'capt65', 'pm10', 'Parcelles Assainies U19'),
-(2, 'capt66', 'pm25', 'Almadies, rond point brioche d\'orée'),
-(3, 'capt68', 'pm1', 'Diamalaye');
+INSERT INTO `capteur` (`idCapteur`, `nomCapteur`, `typeDonnee`, `idPosition`) VALUES
+(1, 'capt65', 'pm10', 1),
+(2, 'capt66', 'pm25', 2),
+(3, 'capt68', 'pm1', 3);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `client`
+-- Structure de la table `client`
 --
 
 CREATE TABLE `client` (
@@ -94,7 +94,7 @@ CREATE TABLE `client` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `client`
+-- Contenu de la table `client`
 --
 
 INSERT INTO `client` (`idClient`, `prenom`, `nom`, `email`, `password`, `telephone`, `validation`) VALUES
@@ -104,7 +104,7 @@ INSERT INTO `client` (`idClient`, `prenom`, `nom`, `email`, `password`, `telepho
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mesure`
+-- Structure de la table `mesure`
 --
 
 CREATE TABLE `mesure` (
@@ -114,46 +114,50 @@ CREATE TABLE `mesure` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `mesure`
+-- Contenu de la table `mesure`
 --
 
 INSERT INTO `mesure` (`idCapteur`, `valeur`, `date`) VALUES
 (1, 76.7869, '2019-07-17'),
 (2, 23.7868, '2019-07-16'),
 (2, 67.9879, '2019-07-08'),
-(1, 767.98, '2019-07-07');
+(1, 767.98, '2019-07-07'),
+(3, 66.898, '2019-07-09');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `position`
+-- Structure de la table `position`
 --
 
 CREATE TABLE `position` (
+  `idPosition` int(11) NOT NULL,
   `latitude` double NOT NULL,
   `longitude` double NOT NULL,
   `designation` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `position`
+-- Contenu de la table `position`
 --
 
-INSERT INTO `position` (`latitude`, `longitude`, `designation`) VALUES
-(12.7687678, -65.98798789, 'Diamalaye');
+INSERT INTO `position` (`idPosition`, `latitude`, `longitude`, `designation`) VALUES
+(1, 14.7378, -17.453300000000013, 'Arafat'),
+(2, 14.7594, -17.438499999999976, 'Parcelles Assainies, Dakar, Sénégal'),
+(3, 14.7401, -17.45010000000002, 'Cité Millionnaire');
 
 --
--- Indexes for dumped tables
+-- Index pour les tables exportées
 --
 
 --
--- Indexes for table `admins`
+-- Index pour la table `admins`
 --
 ALTER TABLE `admins`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `alerte`
+-- Index pour la table `alerte`
 --
 ALTER TABLE `alerte`
   ADD PRIMARY KEY (`idAlerte`),
@@ -161,66 +165,78 @@ ALTER TABLE `alerte`
   ADD KEY `fk_idCapteur` (`idCapteur`);
 
 --
--- Indexes for table `capteur`
+-- Index pour la table `capteur`
 --
 ALTER TABLE `capteur`
-  ADD PRIMARY KEY (`idCapteur`);
+  ADD PRIMARY KEY (`idCapteur`),
+  ADD KEY `fk_idPosition` (`idPosition`);
 
 --
--- Indexes for table `client`
+-- Index pour la table `client`
 --
 ALTER TABLE `client`
   ADD PRIMARY KEY (`idClient`);
 
 --
--- Indexes for table `mesure`
+-- Index pour la table `mesure`
 --
 ALTER TABLE `mesure`
   ADD KEY `fk_idCapteur2` (`idCapteur`);
 
 --
--- Indexes for table `position`
+-- Index pour la table `position`
 --
 ALTER TABLE `position`
-  ADD PRIMARY KEY (`latitude`,`longitude`);
+  ADD PRIMARY KEY (`idPosition`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT pour les tables exportées
 --
 
 --
--- AUTO_INCREMENT for table `admins`
+-- AUTO_INCREMENT pour la table `admins`
 --
 ALTER TABLE `admins`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `alerte`
+-- AUTO_INCREMENT pour la table `alerte`
 --
 ALTER TABLE `alerte`
   MODIFY `idAlerte` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `capteur`
+-- AUTO_INCREMENT pour la table `capteur`
 --
 ALTER TABLE `capteur`
-  MODIFY `idCapteur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `idCapteur` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
--- AUTO_INCREMENT for table `client`
+-- AUTO_INCREMENT pour la table `client`
 --
 ALTER TABLE `client`
   MODIFY `idClient` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
--- Constraints for dumped tables
+-- AUTO_INCREMENT pour la table `position`
+--
+ALTER TABLE `position`
+  MODIFY `idPosition` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
+-- Contraintes pour les tables exportées
 --
 
 --
--- Constraints for table `alerte`
+-- Contraintes pour la table `alerte`
 --
 ALTER TABLE `alerte`
   ADD CONSTRAINT `fk_idCapteur` FOREIGN KEY (`idCapteur`) REFERENCES `capteur` (`idCapteur`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_idClient` FOREIGN KEY (`idClient`) REFERENCES `client` (`idClient`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `mesure`
+-- Contraintes pour la table `capteur`
+--
+ALTER TABLE `capteur`
+  ADD CONSTRAINT `fk_idPosition` FOREIGN KEY (`idPosition`) REFERENCES `position` (`idPosition`);
+
+--
+-- Contraintes pour la table `mesure`
 --
 ALTER TABLE `mesure`
   ADD CONSTRAINT `fk_idCapteur2` FOREIGN KEY (`idCapteur`) REFERENCES `capteur` (`idCapteur`) ON DELETE NO ACTION ON UPDATE NO ACTION;
