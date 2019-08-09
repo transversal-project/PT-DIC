@@ -29,6 +29,8 @@
     $app->post('/ajoutMesure', SensorController::class.':addSensorData');
     ## Ajout d'un capteur
     $app->post('/ajoutCapteur', SensorController::class.':addSensor');
+    ## Envoie d'un mail
+    $app->post('/sendEmail', ManipUsersController::class.':sendEmail');
 
 
     /************ Requêtes get ************/

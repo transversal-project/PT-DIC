@@ -53,4 +53,34 @@
             return $response;
         }
 
+        /**
+         * Fonction permettant d'envoyer des mails
+         */
+        public function sendEmail(Request $request, Response $response) {
+            //Prise des paramètres
+            $destinataire = $request->getParam('destinataire');
+            $sujet = $request->getParam('sujet');
+            $message = $request->getParam('message');
+
+            // Create the Transport
+            $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
+            ->setUsername('un_compte_gmail')
+            ->setPassword('le_mot_de_passe_correspondant')
+            ;
+
+            // Create the Mailer using your created Transport
+            $mailer = new \Swift_Mailer($transport);
+
+            // Create a message
+            $message = (new \Swift_Message($sujet))
+            ->setFrom(['mbayederguene97@gmail.com' => 'Derguene Mbaye'])
+            ->setTo([$destinataire => $destinataire])
+            ->setBody($message)
+            ;
+
+            // Send the message
+            $message = ($mailer->send($message)) == 1 ? "Message envoyé" : "Echec de l'envoie du message";
+            $response->getBody()->write($message);
+        } //End sendEmail
+
     } //End ManipUsersController

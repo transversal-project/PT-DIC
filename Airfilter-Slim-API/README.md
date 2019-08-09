@@ -50,7 +50,7 @@ Les requêtes devront être structurées de la sorte :
 > __Note:__ L'attribut __date__ est *facultatif*; S'il n'est pas spécifié, la date du jour sera considéré.  
 * __ajoutCapteur (nomCapteur, typeDonnee, position, latitude, longitude)__: Ajout d'un capteur.  
 > __Note:__ Le type de donnée est soit __pm1__, __pm10__ ou __pm25__.   
-
+* __sendEmail (destinataire, sujet, message)__: Envoie d'emails  
 
 
 
