@@ -34,7 +34,7 @@ Les requêtes devront être structurées de la sorte :
 ### Fonctions d'affichage (get):  
 * __afficheMesures (position, dateDebut, dateFin)__ : Affichage des mesures des capteurs sur une période définie.  
 > __Note:__ Tous les paramètres sont facultatifs. S'ils ne sont pas spécifiés, toutes les mesures seront retournées. Il est possible de spécifier un paramètre à la fois sauf __dateFin__.  
-* __mesuresCapteur (nomCapteur, dateDebut, dateFin)__ : affichage d'un capteur donné.  
+* __mesuresCapteur (nomCapteur, dateDebut, dateFin)__ : affichage des mesures d'un capteur donné.  
 > __Note:__ Tous les paramètres sont facultatifs sauf __nomCapteur__. Il est possible de spécifier un paramètre à la fois sauf __dateFin__.   
 * __distanceCapteur (latitude1, longitude1, latitude2, longitude2, unite)__ : Calcul de distance entre deux capteurs à partir de leurs coordonnées géographiques (latitudes et longitudes).  
 > __Note:__ L'__unité__ est facultative. Le __km__ est considéré par défaut. Les unités prises en compte sont: __K__ (Kilomètre), __M__ (Miles) et __N__ (Nautical miles).  
